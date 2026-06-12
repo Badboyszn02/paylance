@@ -1,0 +1,23 @@
+{
+  "name": "paylance-contracts",
+  "version": "1.0.0",
+  "description": "PayLance escrow contracts for Arc Network (Solidity, Hardhat)",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:arc": "hardhat run scripts/deploy.js --network arcTestnet",
+    "deploy:local": "hardhat run scripts/deploy.js --network hardhat",
+    "deploy:registry": "hardhat run scripts/deployRegistry.js --network arcTestnet",
+    "verify:arc": "hardhat verify --network arcTestnet"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/hardhat-upgrades": "^3.2.1",
+    "hardhat": "^2.22.10"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2",
+    "@openzeppelin/contracts-upgradeable": "^5.0.2",
+    "dotenv": "^16.4.5"
+  }
+}
