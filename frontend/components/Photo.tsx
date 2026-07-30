@@ -10,7 +10,7 @@ interface Props {
 
 export default function Photo({ src, alt, aspect = 'aspect-[4/3]', priority = false, className = '' }: Props) {
   return (
-    <div className={`relative ${aspect} overflow-hidden bg-[#0f0a22] ${className}`}>
+    <div className={`relative ${aspect} overflow-hidden rounded-lg bg-[#0a1218] ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
@@ -18,18 +18,18 @@ export default function Photo({ src, alt, aspect = 'aspect-[4/3]', priority = fa
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ filter: 'grayscale(1) contrast(1.1) brightness(0.7)' }}
+        style={{ filter: 'grayscale(1) contrast(1.08) brightness(0.72)' }}
       />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'linear-gradient(165deg, rgba(26,21,48,0.85) 0%, rgba(46,37,102,0.70) 45%, rgba(8,145,178,0.55) 100%)',
+          background: 'linear-gradient(165deg, rgba(10,18,24,0.88) 0%, rgba(8,50,62,0.55) 48%, rgba(8,145,178,0.42) 100%)',
         }}
       />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(60% 70% at 50% 40%, rgba(103,232,249,0.18), transparent 65%)',
+          background: 'radial-gradient(60% 70% at 50% 40%, rgba(103,232,249,0.16), transparent 65%)',
         }}
       />
       <div

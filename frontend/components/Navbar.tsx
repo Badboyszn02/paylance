@@ -36,7 +36,6 @@ function WalletButton() {
     }
   };
 
-  // close on click outside
   useEffect(() => {
     if (!menu) return;
     const onDoc = (e: MouseEvent) => {
@@ -52,44 +51,51 @@ function WalletButton() {
 
   if (!address || !user) {
     return (
-      <Button variant="primary" onClick={onConnect} disabled={connecting}>
+      <Button
+        variant="primary"
+        onClick={onConnect}
+        disabled={connecting}
+        className="w-full sm:w-auto min-h-[44px]"
+      >
         {connecting ? 'Signing in…' : 'Connect wallet'}
       </Button>
     );
   }
 
   return (
-    <div ref={wrapRef} className="relative">
+    <div ref={wrapRef} className="relative w-full sm:w-auto">
       <button
         onClick={() => setMenu((v) => !v)}
-        className="flex items-center gap-2 text-sm px-3 py-2.5 rounded-md hover:bg-white/[0.04]"
+        className="flex w-full sm:w-auto items-center justify-center gap-2 text-sm min-h-[44px] px-3 py-2.5 rounded-md hover:bg-white/[0.04] border border-line sm:border-transparent"
         aria-haspopup="menu"
         aria-expanded={menu}
       >
-        <span className={`w-2 h-2 rounded-full ${chainOk ? 'bg-ok' : 'bg-danger'}`} />
+        <span className={`w-2 h-2 rounded-full shrink-0 ${chainOk ? 'bg-ok' : 'bg-danger'}`} />
         <span className="tabular-nums">{shortAddr(address)}</span>
       </button>
 
       {menu && (
-        <div className="absolute right-0 top-full mt-2 w-48 bg-bg border border-line rounded-md py-1.5 fadein z-50 shadow-xl">
+        <div className="absolute right-0 left-0 sm:left-auto top-full mt-2 w-full sm:w-52 bg-bg border border-line rounded-md py-1.5 fadein z-50 shadow-xl">
           {!chainOk && (
             <button
               onClick={onSwitch}
               disabled={switching}
-              className="w-full text-left px-4 py-2 text-xs text-danger hover:bg-white/[0.04] disabled:opacity-50"
+              className="w-full text-left px-4 py-3 text-xs text-danger hover:bg-white/[0.04] disabled:opacity-50 min-h-[44px]"
             >
               {switching ? 'Switching…' : 'Wrong network. Switch to Arc →'}
             </button>
           )}
-          <Link href="/listing/new" onClick={() => setMenu(false)} className="block px-4 py-2 text-sm text-purple-light hover:bg-white/[0.04]">+ New listing</Link>
+          <Link href="/listing/new" onClick={() => setMenu(false)} className="block px-4 py-3 text-sm text-purple-light hover:bg-white/[0.04] min-h-[44px]">
+            + New listing
+          </Link>
           <div className="h-px bg-line my-1" />
-          <Link href="/dashboard" onClick={() => setMenu(false)} className="block px-4 py-2 text-sm text-txt-dim hover:text-white hover:bg-white/[0.04]">Dashboard</Link>
-          <Link href="/orders" onClick={() => setMenu(false)} className="block px-4 py-2 text-sm text-txt-dim hover:text-white hover:bg-white/[0.04]">Orders</Link>
-          <Link href="/settings" onClick={() => setMenu(false)} className="block px-4 py-2 text-sm text-txt-dim hover:text-white hover:bg-white/[0.04]">Settings</Link>
+          <Link href="/dashboard" onClick={() => setMenu(false)} className="block px-4 py-3 text-sm text-txt-dim hover:text-white hover:bg-white/[0.04] min-h-[44px]">Dashboard</Link>
+          <Link href="/orders" onClick={() => setMenu(false)} className="block px-4 py-3 text-sm text-txt-dim hover:text-white hover:bg-white/[0.04] min-h-[44px]">Orders</Link>
+          <Link href="/settings" onClick={() => setMenu(false)} className="block px-4 py-3 text-sm text-txt-dim hover:text-white hover:bg-white/[0.04] min-h-[44px]">Settings</Link>
           <div className="h-px bg-line my-1" />
           <button
             onClick={() => { setMenu(false); disconnect(); }}
-            className="w-full text-left px-4 py-2 text-sm text-danger hover:bg-white/[0.04]"
+            className="w-full text-left px-4 py-3 text-sm text-danger hover:bg-white/[0.04] min-h-[44px]"
           >
             Disconnect
           </button>
@@ -101,7 +107,11 @@ function WalletButton() {
 
 function NavLink({ href, label, active, onClick }: { href: string; label: string; active: boolean; onClick?: () => void }) {
   return (
-    <Link href={href} onClick={onClick} className={active ? 'text-white' : 'text-txt-dim hover:text-white'}>
+    <Link
+      href={href}
+      onClick={onClick}
+      className={`flex items-center py-3 md:py-0 min-h-[44px] md:min-h-0 ${active ? 'text-white' : 'text-txt-dim hover:text-white'}`}
+    >
       {label}
     </Link>
   );
@@ -111,16 +121,32 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  const isActive = (href: string) => href === '/' ? pathname === '/' : (pathname?.startsWith(href) ?? false);
+  const isActive = (href: string) => {
+    if (href.startsWith('/#')) return false;
+    return href === '/' ? pathname === '/' : (pathname?.startsWith(href) ?? false);
+  };
   const close = () => setOpen(false);
 
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
+
+  // Close drawer on route change
+  useEffect(() => { setOpen(false); }, [pathname]);
+
   return (
-    <header className="sticky top-0 z-40 bg-bg">
-      <div className="max-w-container mx-auto px-5 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-bg/95 backdrop-blur-md border-b border-line/60">
+      <div className="max-w-container mx-auto px-4 sm:px-5 h-14 sm:h-16 flex items-center justify-between gap-3">
         <Logo />
 
         <nav className="hidden md:flex items-center gap-7 text-sm">
-          {LINKS.map((l) => <NavLink key={l.href} href={l.href} label={l.label} active={isActive(l.href)} />)}
+          {LINKS.map((l) => (
+            <NavLink key={l.href} href={l.href} label={l.label} active={isActive(l.href)} />
+          ))}
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
@@ -128,11 +154,12 @@ export default function Navbar() {
         </div>
 
         <button
-          className="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-md hover:bg-white/[0.04]"
+          className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-md hover:bg-white/[0.04] active:scale-[0.97]"
           onClick={() => setOpen(!open)}
-          aria-label="Toggle menu"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             {open ? (
               <>
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -150,9 +177,19 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden bg-bg px-5 py-4 flex flex-col gap-4 fadein">
-          {LINKS.map((l) => <NavLink key={l.href} href={l.href} label={l.label} active={isActive(l.href)} onClick={close} />)}
-          <div className="pt-2"><WalletButton /></div>
+        <div className="md:hidden border-t border-line bg-bg px-4 sm:px-5 py-4 flex flex-col gap-1 fadein max-h-[calc(100dvh-3.5rem)] overflow-y-auto">
+          {LINKS.map((l) => (
+            <NavLink key={l.href} href={l.href} label={l.label} active={isActive(l.href)} onClick={close} />
+          ))}
+          <Link href="/orders" onClick={close} className="flex items-center py-3 min-h-[44px] text-txt-dim hover:text-white">
+            Orders
+          </Link>
+          <Link href="/dashboard" onClick={close} className="flex items-center py-3 min-h-[44px] text-txt-dim hover:text-white">
+            Dashboard
+          </Link>
+          <div className="pt-3 pb-2">
+            <WalletButton />
+          </div>
         </div>
       )}
     </header>

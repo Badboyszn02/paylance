@@ -6,11 +6,40 @@
   color-scheme: dark;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html, body {
   background-color: #0a0a0f;
   color: #ffffff;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+}
+
+/* Prevent horizontal scroll from full-bleed diagrams / marquees */
+body {
+  overflow-x: hidden;
+}
+
+/* Readable wrapping for long marketing headlines on small screens */
+h1, h2 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Hide scrollbars on horizontal chip/tab rows while keeping scroll */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 * {

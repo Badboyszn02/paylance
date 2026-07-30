@@ -50,25 +50,25 @@ export const CATEGORIES: readonly CategoryDef[] = [
 
 export default function CategoryGrid({ counts = {} }: { counts?: Record<string, number> }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-14">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-8 gap-y-10 sm:gap-y-14">
       {CATEGORIES.map((c, i) => (
         <Link
           key={c.name}
           href={`/explore?category=${encodeURIComponent(c.name)}`}
-          className="group block"
+          className="group block active:scale-[0.99] transition-transform"
         >
-          <Photo src={c.img} alt={c.alt} aspect="aspect-[4/5]" />
-          <div className="mt-5">
-            <div className="flex items-baseline gap-3">
-              <span className="font-mono tabular-nums text-[11px] tracking-[0.18em] text-txt-mute">
+          <Photo src={c.img} alt={c.alt} aspect="aspect-[16/11] sm:aspect-[4/5]" />
+          <div className="mt-4 sm:mt-5">
+            <div className="flex items-baseline gap-2.5 sm:gap-3 min-w-0">
+              <span className="font-mono tabular-nums text-[11px] tracking-[0.18em] text-txt-mute shrink-0">
                 0{i + 1}
               </span>
-              <span className="font-medium text-lg group-hover:text-purple-light transition-colors">
+              <span className="font-medium text-base sm:text-lg group-hover:text-purple-light transition-colors truncate">
                 {c.name}
               </span>
             </div>
-            <div className="text-sm text-txt-dim mt-2 leading-relaxed">{c.desc}</div>
-            <div className="mt-3 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-txt-mute">
+            <div className="text-sm text-txt-dim mt-1.5 sm:mt-2 leading-relaxed">{c.desc}</div>
+            <div className="mt-2.5 sm:mt-3 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-txt-mute min-h-[28px]">
               <span>{counts[c.name] || 0} active</span>
               <span className="inline-block opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-purple-light">
                 ›

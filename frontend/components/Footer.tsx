@@ -42,8 +42,8 @@ const DOCS = [
 
 export default function Footer() {
   return (
-    <footer className="mt-20 sm:mt-24 py-10">
-      <div className="max-w-container mx-auto px-5 flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
+    <footer className="mt-14 sm:mt-20 md:mt-24 pt-10 pb-6 md:pb-10 border-t border-line/60">
+      <div className="max-w-container mx-auto px-4 sm:px-5 flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <div className="text-xs uppercase tracking-wider text-txt-mute mb-3">Community</div>
           <div className="flex items-center gap-1 -ml-2">
@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-container mx-auto px-5 mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-txt-mute">
+      <div className="max-w-container mx-auto px-4 sm:px-5 mt-8 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-xs text-txt-mute">
         <div>© {new Date().getFullYear()} PayLance · Built on Arc</div>
         <div className="flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-ok" />
