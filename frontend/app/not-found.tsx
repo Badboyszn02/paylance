@@ -7,7 +7,7 @@ export default function NotFound() {
         404
       </div>
       <h1 className="text-2xl sm:text-3xl md:text-4xl max-w-xl leading-snug">
-        We could not find that <span className="font-display italic text-purple-light">page</span>.
+        We could not find that <span className="font-semibold tracking-tight text-purple-light">page</span>.
       </h1>
       <p className="text-txt-dim mt-6 max-w-xl leading-relaxed">
         The link may be broken, or the listing or order you opened was removed. Try browsing from the home page.

@@ -139,7 +139,7 @@ export default function NewListingPage() {
         eyebrow="Post on PayLance"
         title={
           <>
-            Offer a service or <span className="font-display italic text-purple-light">hire</span> someone.
+            Offer a service or <span className="font-semibold tracking-tight text-purple-light">hire</span> someone.
           </>
         }
         sub="Pick whether you are offering work or looking to hire. Set the price in USDC and a delivery window. It appears on Browse the moment you post it."

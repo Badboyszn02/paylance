@@ -1,7 +1,8 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
-import { Hanken_Grotesk, Instrument_Serif, JetBrains_Mono } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import { AuthProvider } from '@/lib/auth';
 import { WalletProvider } from '@/lib/wallet';
 import { ToastProvider } from '@/components/Toast';
@@ -9,25 +10,8 @@ import Navbar from '@/components/Navbar';
 import MobileNav from '@/components/MobileNav';
 import Footer from '@/components/Footer';
 
-const sans = Hanken_Grotesk({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-sans',
-});
-
-const display = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-  style: ['normal', 'italic'],
-  display: 'swap',
-  variable: '--font-display',
-});
-
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-mono',
-});
+// Local Geist (bundled) — no Google Fonts network dependency.
+// Product sans for UI; mono for wallets / amounts / labels.
 
 export const metadata: Metadata = {
   title: {
@@ -47,8 +31,8 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
-      <body className="font-sans bg-bg text-white min-h-[100dvh] flex flex-col overflow-x-hidden">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className="font-sans bg-bg text-white min-h-[100dvh] flex flex-col overflow-x-hidden antialiased">
         <AuthProvider>
           <WalletProvider>
             <ToastProvider>

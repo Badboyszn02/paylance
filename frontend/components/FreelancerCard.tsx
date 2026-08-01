@@ -32,7 +32,7 @@ export default function FreelancerCard({ listing }: { listing: Listing }) {
             Looking to hire
           </span>
         )}
-        <div className="font-display italic text-lg sm:text-xl leading-snug line-clamp-2 group-hover:text-purple-light transition-colors">
+        <div className="font-semibold tracking-tight text-lg sm:text-xl leading-snug line-clamp-2 group-hover:text-purple-light transition-colors">
           {l.title}
         </div>
         <p className="text-sm sm:text-base text-txt-dim mt-2 line-clamp-2 leading-relaxed">

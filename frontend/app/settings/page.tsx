@@ -132,7 +132,7 @@ export default function SettingsPage() {
         eyebrow="Settings"
         title={
           <>
-            Your public profile and <span className="font-display italic text-purple-light">payout wallet</span>.
+            Your public profile and <span className="font-semibold tracking-tight text-purple-light">payout wallet</span>.
           </>
         }
         sub="Updates apply across PayLance. Profile fields appear on your listings, orders, and reviews."

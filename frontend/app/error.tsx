@@ -15,7 +15,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
       </div>
       <h1 className="text-2xl sm:text-3xl md:text-4xl max-w-xl leading-snug">
         This page hit an unexpected{' '}
-        <span className="font-display italic text-purple-light">error</span>.
+        <span className="font-semibold tracking-tight text-purple-light">error</span>.
       </h1>
       <p className="text-txt-dim mt-6 max-w-xl leading-relaxed">
         The page failed to render. Try reloading. If it keeps happening, head back to the home page and let us know.
