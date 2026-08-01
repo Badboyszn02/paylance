@@ -24,6 +24,9 @@ blob-report/
 playwright/.cache/
 **/e2e/screenshots/
 
+# Agent tooling — not part of the build
+.grok/
+
 # Logs
 npm-debug.log*
 yarn-error.log*
