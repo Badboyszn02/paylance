@@ -143,11 +143,7 @@ export default function NewListingPage() {
       <PageHero
         quiet
         eyebrow="Post on PayLance"
-        title={
-          <>
-            Offer a service or <span className="font-semibold tracking-tight text-purple-light">hire</span> someone.
-          </>
-        }
+        title="Offer a service or hire someone."
         sub="Pick whether you are offering work or looking to hire. Set the price in USDC and a delivery window. It appears on Browse the moment you post it."
       />
 

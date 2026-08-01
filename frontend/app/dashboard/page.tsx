@@ -125,15 +125,11 @@ export default function DashboardPage() {
       <PageHero
         quiet
         eyebrow="Dashboard"
-        title={
-          <>
-            Your activity on <span className="font-semibold tracking-tight text-purple-light">PayLance</span>.
-          </>
-        }
+        title="Your activity on PayLance."
         sub={`Snapshot of your ${isClient ? 'spending' : 'earnings'}, orders in flight, and pending escrow.`}
       />
 
-      <section className="max-w-container mx-auto px-5 pb-16 sm:pb-24 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-12 lg:gap-16">
+      <section className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 pb-16 sm:pb-24 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-12 lg:gap-16">
         <Sidebar />
 
         <div>

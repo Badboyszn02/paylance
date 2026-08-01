@@ -37,15 +37,11 @@ export default function OrdersPage() {
       <PageHero
         quiet
         eyebrow="Orders"
-        title={
-          <>
-            Every order you&rsquo;re <span className="font-semibold tracking-tight text-purple-light">part of</span>.
-          </>
-        }
+        title="Every order you’re part of."
         sub="As client or freelancer. Open one to chat, deliver work, fund the escrow contract, or release payment on Arc."
       />
 
-      <section className="max-w-container mx-auto px-5 pb-16 sm:pb-24">
+      <section className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 pb-16 sm:pb-24">
         {orders === null ? (
           <div className="flex flex-col gap-3">
             {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-16" />)}

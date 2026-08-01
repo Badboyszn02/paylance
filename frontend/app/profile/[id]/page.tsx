@@ -36,8 +36,8 @@ export default function ProfilePage() {
     api<ProfileData>(`/api/profile/${id}`, { auth: false }).then(setData).catch(() => setData(false));
   }, [id]);
 
-  if (data === null) return <div className="max-w-container mx-auto px-5 py-10"><Skeleton className="h-72" /></div>;
-  if (data === false) return <div className="max-w-container mx-auto px-5 py-20 text-txt-dim">Profile not found.</div>;
+  if (data === null) return <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-10"><Skeleton className="h-72" /></div>;
+  if (data === false) return <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-20 text-txt-dim">Profile not found.</div>;
 
   const p: Profile = data.profile || {};
   const isCreator = data.role === 'creator';
@@ -53,7 +53,7 @@ export default function ProfilePage() {
       {/* spacer */}
       <div className="h-16" />
 
-      <div className="max-w-container mx-auto px-5">
+      <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8">
         <div className="-mt-10 flex flex-col sm:flex-row sm:items-end gap-4">
           <Avatar name={data.name} src={p.avatar_url} size={88} />
           <div className="flex-1">
