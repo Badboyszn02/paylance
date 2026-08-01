@@ -28,7 +28,7 @@ const PRODUCT = [
   { href: '/explore', label: 'Listings' },
   { href: '/hire', label: 'Hire' },
   { href: '/listing/new', label: 'Post a listing' },
-  { href: '/#how-it-works', label: 'How it works' },
+  { href: '/how-it-works', label: 'How it works' },
   { href: '/#testnet', label: 'Testnet' },
 ];
 

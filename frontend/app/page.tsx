@@ -243,7 +243,7 @@ export default function HomePage() {
       {/* ── How it works ── timeline tied to the product metaphor ── */}
       <section
         id="how-it-works"
-        className="border-t border-white/[0.06] bg-white/[0.015]"
+        className="scroll-mt-20 border-t border-white/[0.06] bg-white/[0.015]"
       >
         <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 md:py-24">
           <Reveal>
@@ -345,7 +345,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Testnet ── product-panel language like the escrow card ── */}
-      <section id="testnet" className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 border-t border-white/[0.06]">
+      <section id="testnet" className="scroll-mt-20 max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-16 sm:py-20 border-t border-white/[0.06]">
         <div className="rounded-2xl border border-white/[0.1] overflow-hidden bg-[#0c0c12]">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="px-5 py-8 sm:px-8 sm:py-10 lg:py-12 border-b lg:border-b-0 lg:border-r border-white/[0.08]">

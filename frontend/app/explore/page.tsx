@@ -510,7 +510,7 @@ function ExploreInner() {
         {/* Quiet help footer link */}
         <p className="mt-12 sm:mt-16 text-center text-sm text-txt-mute">
           New to escrow?{' '}
-          <Link href="/#how-it-works" className="text-purple-light hover:text-white transition-colors">
+          <Link href="/how-it-works" className="text-purple-light hover:text-white transition-colors">
             See how payments work
           </Link>
         </p>

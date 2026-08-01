@@ -11,7 +11,7 @@ import { friendly } from '@/lib/errors';
 const LINKS = [
   { href: '/explore', label: 'Listings' },
   { href: '/hire', label: 'Hire' },
-  { href: '/#how-it-works', label: 'How it works' },
+  { href: '/how-it-works', label: 'How it works' },
 ];
 
 function WalletButton({ compact = false }: { compact?: boolean }) {
@@ -98,7 +98,7 @@ function WalletButton({ compact = false }: { compact?: boolean }) {
             onClick={() => setMenu(false)}
             className="block px-4 py-3 text-sm text-purple-light hover:bg-white/[0.04] min-h-[44px]"
           >
-            New listing
+            Post a listing
           </Link>
           <div className="h-px bg-line my-1" />
           <Link href="/dashboard" onClick={() => setMenu(false)} className="block px-4 py-3 text-sm text-txt-dim hover:text-white hover:bg-white/[0.04] min-h-[44px]">
@@ -191,12 +191,18 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-3 ml-auto">
+          <div className="hidden md:flex items-center gap-2.5 ml-auto">
+            {/* Same destination and label as the mobile sheet and the wallet
+                menu — this used to read "Post" / "Post a listing" / "New
+                listing" for one route. Bordered so it reads as an action next
+                to the wallet button rather than a fourth nav link. */}
             <Link
               href="/listing/new"
-              className="text-[13px] text-txt-dim hover:text-white transition-colors"
+              className="inline-flex items-center justify-center h-8 px-3 text-xs font-medium rounded-full
+                border border-line text-txt-dim hover:text-white hover:border-white/20 hover:bg-white/[0.04]
+                transition-colors whitespace-nowrap"
             >
-              Post
+              Post a listing
             </Link>
             <WalletButton />
           </div>
