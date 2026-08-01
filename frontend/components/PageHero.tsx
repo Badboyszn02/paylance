@@ -17,13 +17,13 @@ export default function PageHero({ eyebrow, title, sub, children, quiet = false 
   return (
     <section className="relative">
       {!quiet && <HeroBackdrop />}
-      <div className={`relative max-w-container mx-auto px-4 sm:px-5 ${padding}`}>
+      <div className={`relative max-w-container mx-auto px-5 sm:px-6 lg:px-8 ${padding}`}>
         {eyebrow && (
           <div className="font-mono uppercase tracking-[0.18em] text-[10px] sm:text-[11px] text-purple-light mb-3 sm:mb-5">
             {eyebrow}
           </div>
         )}
-        <h1 className="text-[1.65rem] sm:text-3xl md:text-4xl max-w-2xl leading-[1.2] sm:leading-snug tracking-tight">
+        <h1 className="text-[1.65rem] sm:text-3xl md:text-4xl max-w-2xl font-semibold leading-[1.2] sm:leading-snug tracking-tight">
           {title}
         </h1>
         {sub && (
