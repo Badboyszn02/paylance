@@ -47,12 +47,67 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // restore wallet + try to load existing JWT user on mount
+  /** Ask the wallet what chain it is actually on. `chainOk` starts optimistic,
+      so without this a restored session renders a green "on Arc" dot for a
+      wallet sitting on mainnet until the user happens to switch networks. */
+  const syncChain = useCallback(async (): Promise<void> => {
+    const eth = typeof window !== 'undefined' ? window.ethereum : null;
+    if (!eth?.request) return;
+    try {
+      const hex = (await eth.request({ method: 'eth_chainId' })) as string;
+      setChainOk(parseInt(hex, 16) === ARC_CHAIN_ID);
+    } catch {
+      // Wallet locked or unavailable — keep the last known value.
+    }
+  }, []);
+
+  const disconnect = useCallback((): void => {
+    setAddress(null);
+    setUser(null);
+    localStorage.removeItem('paylance_wallet');
+    localStorage.removeItem('paylance_token');
+    resetSocket();
+  }, []);
+
+  // Restore on mount. The saved address is only a hint — ask the wallet which
+  // accounts it still exposes (eth_accounts does not prompt). Trusting
+  // localStorage alone kept rendering a connected wallet after the user had
+  // revoked this site in MetaMask, or in a browser with no wallet at all.
   useEffect(() => {
-    const saved = typeof window !== 'undefined' && localStorage.getItem('paylance_wallet');
-    if (saved) setAddress(saved);
-    refreshUser();
-  }, [refreshUser]);
+    let cancelled = false;
+
+    const clearStale = () => {
+      localStorage.removeItem('paylance_wallet');
+      localStorage.removeItem('paylance_token');
+      if (cancelled) return;
+      setAddress(null);
+      setUser(null);
+      setLoadingUser(false);
+    };
+
+    (async () => {
+      if (typeof window === 'undefined') return;
+      const saved = localStorage.getItem('paylance_wallet');
+      if (!saved) { await refreshUser(); return; }
+
+      const eth = window.ethereum;
+      if (!eth?.request) { clearStale(); return; }
+
+      try {
+        const accounts = (await eth.request({ method: 'eth_accounts' })) as string[];
+        const live = accounts?.find((a) => a.toLowerCase() === saved.toLowerCase());
+        if (cancelled) return;
+        if (!live) { clearStale(); return; }
+        setAddress(live);
+        await syncChain();
+      } catch {
+        if (!cancelled) setAddress(saved);
+      }
+      if (!cancelled) await refreshUser();
+    })();
+
+    return () => { cancelled = true; };
+  }, [refreshUser, syncChain]);
 
   // listen for in-wallet account / chain changes
   useEffect(() => {
@@ -77,8 +132,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       eth.removeListener?.('accountsChanged', onAccounts);
       eth.removeListener?.('chainChanged', onChain);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
+  }, [address, disconnect]);
 
   async function signIn(wallet: string): Promise<void> {
     const eth = typeof window !== 'undefined' ? window.ethereum : null;
@@ -109,10 +163,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const accounts = (await eth.request({ method: 'eth_requestAccounts' })) as string[];
       const addr = accounts?.[0];
       if (!addr) throw new Error('No wallet account exposed');
-      const chainHex = (await eth.request({ method: 'eth_chainId' })) as string;
-      setChainOk(parseInt(chainHex, 16) === ARC_CHAIN_ID);
-      setAddress(addr);
-      localStorage.setItem('paylance_wallet', addr);
+      await syncChain();
 
       // Sign in if no valid JWT yet
       const existing = localStorage.getItem('paylance_token');
@@ -123,11 +174,17 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         // if /me failed (expired token), refreshUser cleared it; sign in
         if (!localStorage.getItem('paylance_token')) await signIn(addr);
       }
+
+      // Persist only once the session is real. Writing the address before
+      // signing left a stale paylance_wallet behind whenever the user rejected
+      // the signature prompt, which then restored as "connected" on reload.
+      setAddress(addr);
+      localStorage.setItem('paylance_wallet', addr);
       return addr;
     } finally {
       setConnecting(false);
     }
-  }, [refreshUser]);
+  }, [refreshUser, syncChain]);
 
   const switchToArc = useCallback(async (): Promise<void> => {
     const eth = typeof window !== 'undefined' ? window.ethereum : null;
@@ -155,15 +212,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         throw err;
       }
     }
-  }, []);
-
-  const disconnect = useCallback((): void => {
-    setAddress(null);
-    setUser(null);
-    localStorage.removeItem('paylance_wallet');
-    localStorage.removeItem('paylance_token');
-    resetSocket();
-  }, []);
+    // wallet_addEthereumChain does not reliably emit chainChanged, so the
+    // listener alone would leave chainOk stale after adding Arc.
+    await syncChain();
+  }, [syncChain]);
 
   return (
     <WalletCtx.Provider value={{

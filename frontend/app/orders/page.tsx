@@ -37,15 +37,11 @@ export default function OrdersPage() {
       <PageHero
         quiet
         eyebrow="Orders"
-        title={
-          <>
-            Every order you&rsquo;re <span className="font-display italic text-purple-light">part of</span>.
-          </>
-        }
+        title="Every order you’re part of."
         sub="As client or freelancer. Open one to chat, deliver work, fund the escrow contract, or release payment on Arc."
       />
 
-      <section className="max-w-container mx-auto px-5 pb-16 sm:pb-24">
+      <section className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 pb-16 sm:pb-24">
         {orders === null ? (
           <div className="flex flex-col gap-3">
             {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-16" />)}
@@ -54,7 +50,7 @@ export default function OrdersPage() {
           <Reveal>
             <div className="py-10">
               <EmptyMark />
-              <div className="font-display italic text-xl mt-6">No orders yet.</div>
+              <div className="font-semibold tracking-tight text-xl mt-6">No orders yet.</div>
               <p className="text-sm text-txt-dim mt-2 max-w-md leading-relaxed">
                 Once you hire someone (or get hired), the order shows up here with its chat, status, and escrow state.
               </p>
@@ -83,12 +79,12 @@ export default function OrdersPage() {
                         <span className="font-mono tabular-nums text-[11px] tracking-[0.18em] text-txt-mute shrink-0">
                           #{o.id}
                         </span>
-                        <span className="font-display italic text-lg truncate group-hover:text-purple-light transition-colors">
+                        <span className="font-semibold tracking-tight text-lg truncate group-hover:text-purple-light transition-colors">
                           {o.listing_title || `Order ${o.id}`}
                         </span>
                       </div>
                       <div className="text-[11px] uppercase tracking-[0.18em] font-mono text-txt-mute mt-2 truncate">
-                        {role} {counterpart} Â· {timeAgo(o.created_at)}
+                        {role} {counterpart} · {timeAgo(o.created_at)}
                       </div>
                     </div>
                     <div className="flex items-center gap-6 shrink-0">

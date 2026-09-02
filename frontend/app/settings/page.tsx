@@ -130,11 +130,7 @@ export default function SettingsPage() {
       <PageHero
         quiet
         eyebrow="Settings"
-        title={
-          <>
-            Your public profile and <span className="font-display italic text-purple-light">payout wallet</span>.
-          </>
-        }
+        title="Your public profile and payout wallet."
         sub="Updates apply across PayLance. Profile fields appear on your listings, orders, and reviews."
       />
 

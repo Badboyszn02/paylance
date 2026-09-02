@@ -134,8 +134,8 @@ export default function OrderPage() {
     catch (e) { toast.error(friendly(e)); }
   };
 
-  if (notFound) return <div className="max-w-container mx-auto px-5 py-20 text-txt-dim">Order not found or not yours.</div>;
-  if (!order || !user) return <div className="max-w-container mx-auto px-5 py-10"><Skeleton className="h-[70vh]" /></div>;
+  if (notFound) return <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-20 text-txt-dim">Order not found or not yours.</div>;
+  if (!order || !user) return <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-10"><Skeleton className="h-[70vh]" /></div>;
 
   const isClient = order.client_id === user.id;
   const isFreelancer = order.freelancer_id === user.id;
@@ -210,7 +210,7 @@ export default function OrderPage() {
   };
 
   return (
-    <div className="max-w-container mx-auto px-5 py-8 grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
+    <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
       {/* Chat */}
       <div className="bg-card rounded-lg flex flex-col h-[75vh]">
         <div className="px-5 py-4 border-b border-line flex items-center justify-between">

@@ -125,15 +125,11 @@ export default function DashboardPage() {
       <PageHero
         quiet
         eyebrow="Dashboard"
-        title={
-          <>
-            Your activity on <span className="font-display italic text-purple-light">PayLance</span>.
-          </>
-        }
+        title="Your activity on PayLance."
         sub={`Snapshot of your ${isClient ? 'spending' : 'earnings'}, orders in flight, and pending escrow.`}
       />
 
-      <section className="max-w-container mx-auto px-5 pb-16 sm:pb-24 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-12 lg:gap-16">
+      <section className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 pb-16 sm:pb-24 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-12 lg:gap-16">
         <Sidebar />
 
         <div>
@@ -186,7 +182,7 @@ export default function DashboardPage() {
                           className="group flex items-center justify-between gap-4 py-4 transition-colors"
                         >
                           <div className="min-w-0 flex-1">
-                            <div className="font-display italic group-hover:text-purple-light transition-colors truncate">
+                            <div className="font-semibold tracking-tight group-hover:text-purple-light transition-colors truncate">
                               {o.listing_title || `Order ${o.id}`}
                             </div>
                             <div className="text-[11px] uppercase tracking-[0.18em] font-mono text-txt-mute mt-1.5">
@@ -231,7 +227,7 @@ export default function DashboardPage() {
                           <Reveal key={l.id} delay={i * 60}>
                             <div className="group flex items-center justify-between gap-4 py-4">
                               <div className="min-w-0 flex-1">
-                                <Link href={`/listing/${l.id}`} className="font-display italic group-hover:text-purple-light transition-colors truncate block">
+                                <Link href={`/listing/${l.id}`} className="font-semibold tracking-tight group-hover:text-purple-light transition-colors truncate block">
                                   {l.title}
                                 </Link>
                                 <div className="text-[11px] uppercase tracking-[0.18em] font-mono text-txt-mute mt-1.5">

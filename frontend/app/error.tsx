@@ -9,13 +9,12 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   }, [error]);
 
   return (
-    <section className="max-w-container mx-auto px-5 py-24 sm:py-32">
+    <section className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-24 sm:py-32">
       <div className="font-mono uppercase tracking-[0.18em] text-[11px] text-purple-light mb-5">
         Something broke
       </div>
-      <h1 className="text-2xl sm:text-3xl md:text-4xl max-w-xl leading-snug">
-        This page hit an unexpected{' '}
-        <span className="font-display italic text-purple-light">error</span>.
+      <h1 className="text-2xl sm:text-3xl md:text-4xl max-w-xl font-semibold tracking-tight leading-snug">
+        This page hit an unexpected error.
       </h1>
       <p className="text-txt-dim mt-6 max-w-xl leading-relaxed">
         The page failed to render. Try reloading. If it keeps happening, head back to the home page and let us know.

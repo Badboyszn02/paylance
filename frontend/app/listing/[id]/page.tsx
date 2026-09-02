@@ -53,12 +53,12 @@ export default function ListingPage() {
     }
   };
 
-  if (data === null) return <div className="max-w-container mx-auto px-5 py-10"><Skeleton className="h-96" /></div>;
-  if (data === false) return <div className="max-w-container mx-auto px-5 py-20 text-txt-dim">Listing not found.</div>;
+  if (data === null) return <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-10"><Skeleton className="h-96" /></div>;
+  if (data === false) return <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-20 text-txt-dim">Listing not found.</div>;
 
   const l = data.listing;
   return (
-    <div className="max-w-container mx-auto px-5 py-10 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
+    <div className="max-w-container mx-auto px-5 sm:px-6 lg:px-8 py-10 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-8">
       {/* Left: details */}
       <div>
         <div className="flex items-center gap-2 flex-wrap">

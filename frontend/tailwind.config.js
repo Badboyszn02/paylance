@@ -28,9 +28,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'ui-serif', 'Georgia', 'serif'],
-        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        // Geist Sans / Mono via CSS variables from geist package
+        sans: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-geist-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-geist-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       lineHeight: {
         relaxed: '1.7',

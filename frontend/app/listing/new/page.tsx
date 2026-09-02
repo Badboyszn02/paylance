@@ -40,7 +40,7 @@ function RolePick({ active, onClick, label, sub }: { active: boolean; onClick: (
 
 export default function NewListingPage() {
   const { user, loading, refresh } = useAuth();
-  const { address, chainOk, switchToArc } = useWallet();
+  const { address, chainOk, switchToArc, connect, connecting } = useWallet();
   const router = useRouter();
   const toast = useToast();
   const [busy, setBusy] = useState(false);
@@ -56,10 +56,16 @@ export default function NewListingPage() {
   const [deliveryDays, setDeliveryDays] = useState('');
   const [tags, setTags] = useState('');
 
-  useEffect(() => {
-    if (loading) return;
-    if (!user) router.push('/');
-  }, [user, loading, router]);
+  // No redirect on signed-out. Bouncing to "/" threw the user back to the
+  // landing page with no explanation of why the Post link did nothing; the
+  // page now explains what is needed and offers the wallet prompt in place.
+  const onConnect = async () => {
+    try {
+      await connect();
+    } catch (e) {
+      toast.error(friendly(e));
+    }
+  };
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -137,17 +143,37 @@ export default function NewListingPage() {
       <PageHero
         quiet
         eyebrow="Post on PayLance"
-        title={
-          <>
-            Offer a service or <span className="font-display italic text-purple-light">hire</span> someone.
-          </>
-        }
+        title="Offer a service or hire someone."
         sub="Pick whether you are offering work or looking to hire. Set the price in USDC and a delivery window. It appears on Browse the moment you post it."
       />
 
-      {loading || !user ? (
-        <section className="max-w-2xl mx-auto px-5 pb-16">
+      {loading ? (
+        <section className="max-w-2xl mx-auto px-5 sm:px-6 lg:px-8 pb-16">
           <Skeleton className="h-96" />
+        </section>
+      ) : !user ? (
+        <section className="max-w-2xl mx-auto px-5 sm:px-6 lg:px-8 pb-16 sm:pb-24">
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] px-5 py-10 sm:px-10 sm:py-12">
+            <p className="font-mono uppercase tracking-[0.18em] text-[11px] text-purple-light">
+              Wallet required
+            </p>
+            <p className="mt-3 text-xl sm:text-2xl font-semibold tracking-tight text-white leading-snug">
+              Connect a wallet to post.
+            </p>
+            <p className="text-txt-dim mt-3 text-sm sm:text-base leading-relaxed max-w-md">
+              Listings are signed by the wallet that owns them, so posting needs a
+              connected account. PayLance uses Sign In With Ethereum — one signature,
+              no email, no password.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 mt-7">
+              <Button onClick={onConnect} disabled={connecting} className="w-full sm:w-auto">
+                {connecting ? 'Signing in…' : 'Connect wallet'}
+              </Button>
+              <Button variant="ghost" href="/explore" className="w-full sm:w-auto">
+                Browse listings
+              </Button>
+            </div>
+          </div>
         </section>
       ) : (
         <section className="max-w-2xl mx-auto px-5 pb-16 sm:pb-24">

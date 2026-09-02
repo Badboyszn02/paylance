@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Secrets — never commit
+.env
+.env.local
+.env*.local
+
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Hardhat / contracts build output
+artifacts/
+cache/
+typechain-types/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+**/e2e/screenshots/
+
+# Agent tooling — not part of the build
+.grok/
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db

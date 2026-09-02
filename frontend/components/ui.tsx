@@ -24,28 +24,37 @@ type ButtonProps =
   & Partial<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'children' | 'className' | 'href'>>;
 
 export function Button({ variant = 'primary', href, className = '', disabled, children, ...rest }: ButtonProps) {
-  const cls = `inline-flex items-center justify-center px-4 py-2.5 text-sm font-medium rounded-md
-    disabled:opacity-40 disabled:cursor-not-allowed ${BTN[variant]} ${className}`;
+  const cls = `inline-flex items-center justify-center min-h-[44px] px-5 py-2.5 text-sm font-medium rounded-md whitespace-nowrap
+    active:scale-[0.98] transition-[color,background-color,border-color,transform] duration-200
+    focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-accent
+    disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 ${BTN[variant]} ${className}`;
   if (href) return <Link href={href} className={cls} {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}>{children}</Link>;
   return <button className={cls} disabled={disabled} {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}>{children}</button>;
 }
 
 // ---------- Input / Field ----------
-export function Input({ className = '', ...rest }: InputHTMLAttributes<HTMLInputElement>) {
+// `invalid` is a prop rather than a caller-supplied `border-danger` class:
+// Tailwind emits border colors alphabetically, so `border-line` would always
+// override `border-danger` and the error state would silently not render.
+export function Input({ className = '', invalid = false, ...rest }: InputHTMLAttributes<HTMLInputElement> & { invalid?: boolean }) {
   return (
     <input
-      className={`w-full bg-surface px-3 py-2.5 text-sm rounded-md outline-none
-        border border-line focus:border-purple-accent ${className}`}
+      aria-invalid={invalid || undefined}
+      className={`w-full bg-surface px-3 py-3 text-base sm:text-sm rounded-md outline-none min-h-[44px] border
+        ${invalid
+          ? 'border-danger focus:border-danger focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-danger/40'
+          : 'border-line focus:border-purple-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-purple-accent/40'} ${className}`}
       {...rest}
     />
   );
 }
 
-export function Textarea({ className = '', ...rest }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
+export function Textarea({ className = '', invalid = false, ...rest }: TextareaHTMLAttributes<HTMLTextAreaElement> & { invalid?: boolean }) {
   return (
     <textarea
-      className={`w-full bg-surface px-3 py-2.5 text-sm rounded-md outline-none leading-relaxed
-        border border-line focus:border-purple-accent ${className}`}
+      aria-invalid={invalid || undefined}
+      className={`w-full bg-surface px-3 py-2.5 text-sm rounded-md outline-none leading-relaxed border
+        ${invalid ? 'border-danger focus:border-danger' : 'border-line focus:border-purple-accent'} ${className}`}
       {...rest}
     />
   );
@@ -54,8 +63,9 @@ export function Textarea({ className = '', ...rest }: TextareaHTMLAttributes<HTM
 export function Select({ className = '', children, ...rest }: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <select
-      className={`w-full bg-surface px-3 py-2.5 text-sm rounded-md outline-none
-        border border-line focus:border-purple-accent ${className}`}
+      className={`w-full bg-surface px-3 py-3 text-base sm:text-sm rounded-md outline-none min-h-[44px]
+        border border-line focus:border-purple-accent
+        focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-purple-accent/40 ${className}`}
       {...rest}
     >
       {children}
@@ -131,9 +141,9 @@ export function Skeleton({ className = '' }: { className?: string }) {
 // ---------- Section heading ----------
 export function SectionTitle({ children, sub }: { children: ReactNode; sub?: ReactNode }) {
   return (
-    <div className="mb-6">
-      <h2 className="text-2xl">{children}</h2>
-      {sub && <p className="text-txt-dim mt-1">{sub}</p>}
+    <div className="mb-8 sm:mb-10">
+      <h2 className="text-[1.65rem] sm:text-3xl font-semibold tracking-tight leading-snug">{children}</h2>
+      {sub && <p className="text-txt-dim mt-2 max-w-2xl text-[0.95rem] sm:text-base leading-relaxed">{sub}</p>}
     </div>
   );
 }
